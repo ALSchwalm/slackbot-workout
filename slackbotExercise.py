@@ -149,7 +149,7 @@ period has past.
 '''
 def selectExerciseAndStartTime(bot):
     next_time_interval = selectNextTimeInterval(bot)
-    minute_interval = next_time_interval/60
+    minute_interval = int(next_time_interval/60)
     exercise = selectExercise(bot)
 
     # Announcement String of next lottery time

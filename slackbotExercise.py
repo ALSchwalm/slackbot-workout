@@ -192,7 +192,7 @@ def assignExercise(bot, exercise):
     # Select number of reps
     exercise_reps = random.randrange(exercise["minReps"], exercise["maxReps"]+1)
 
-    winner_announcement = str(exercise_reps) + " " + str(exercise["units"]) + " " + exercise["name"] + " RIGHT NOW "
+    winner_announcement = str(exercise_reps) + " " + str(exercise["units"]) + " of " + exercise["name"] + " RIGHT NOW "
 
     # EVERYBODY
     if random.random() < bot.group_callout_chance:

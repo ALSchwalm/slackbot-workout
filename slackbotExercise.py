@@ -208,7 +208,7 @@ def assignExercise(bot, exercise):
         winners = [selectUser(bot, exercise) for i in range(bot.num_people_per_callout)]
 
         for i in range(bot.num_people_per_callout):
-            winner_announcement += str(winners[i].getUserHandle())
+            winner_announcement += winners[i].getUserHandle().decode("utf-8")
             if i == bot.num_people_per_callout - 2:
                 winner_announcement += ", and "
             elif i == bot.num_people_per_callout - 1:

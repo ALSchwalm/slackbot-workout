@@ -43,6 +43,27 @@
       "minReps": 40,
       "maxReps": 50,
       "units": "second"
+    },
+    {
+      "id": 3,
+      "name": "stair runs",
+      "minReps": 1,
+      "maxReps": 4,
+      "units": "reps"
+    },
+    {
+      "id": 4,
+      "name": "horse stance",
+      "minReps": 40,
+      "maxReps": 50,
+      "units": "second"
+    },
+    {
+      "id": 5,
+      "name": "body-weight squats",
+      "minReps": 8,
+      "maxReps": 15,
+      "units": "reps"
     }
   ]
 }

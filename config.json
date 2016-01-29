@@ -1,0 +1,48 @@
+{
+  "teamDomain": "starlabio",
+  "channelName": "workout",
+  "channelId": "C0KDUUZP1",
+
+  "officeHours": {
+    "on": true,
+    "begin": 9,
+    "end": 16
+   },
+
+  "debug": false,
+
+  "callouts": {
+    "timeBetween": {
+      "minTime": 17,
+      "maxTime": 23,
+      "units": "minutes"
+    },
+    "numPeople": 1,
+    "slidingWindowSize": 8,
+    "groupCalloutChance": 0.05
+  },
+
+  "exercises": [
+    {
+      "id": 0,
+      "name": "pushups",
+      "minReps": 8,
+      "maxReps": 15,
+      "units": "reps"
+    },
+    {
+      "id": 1,
+      "name": "planks",
+      "minReps": 40,
+      "maxReps": 60,
+      "units": "second"
+    },
+    {
+      "id": 2,
+      "name": "wall sit",
+      "minReps": 40,
+      "maxReps": 50,
+      "units": "second"
+    }
+  ]
+}

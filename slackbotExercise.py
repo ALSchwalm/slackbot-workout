@@ -78,6 +78,9 @@ Selects an active user from a list of users
 def selectUser(bot, exercise):
     active_users = fetchActiveUsers(bot)
 
+    if len(active_users) == 0:
+        return None
+
     # Add all active users not already in the user queue
     # Shuffles to randomly add new active users
     shuffle(active_users)
@@ -194,6 +197,11 @@ def assignExercise(bot, exercise):
 
     winner_announcement = str(exercise_reps) + " " + str(exercise["units"]) + " " + exercise["name"] + " RIGHT NOW "
 
+    winners = [selectUser(bot, exercise) for i in range(bot.num_people_per_callout)]
+    if None in winners:
+        print "Not enough users to select a winner"
+        return
+
     # EVERYBODY
     if random.random() < bot.group_callout_chance:
         winner_announcement += "@channel!"
@@ -205,8 +213,6 @@ def assignExercise(bot, exercise):
         logExercise(bot,"@channel",exercise["name"],exercise_reps,exercise["units"])
 
     else:
-        winners = [selectUser(bot, exercise) for i in range(bot.num_people_per_callout)]
-
         for i in range(bot.num_people_per_callout):
             winner_announcement += str(winners[i].getUserHandle())
             if i == bot.num_people_per_callout - 2:

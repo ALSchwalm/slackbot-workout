@@ -12,11 +12,7 @@
   "debug": false,
 
   "callouts": {
-    "timeBetween": {
-      "minTime": 17,
-      "maxTime": 23,
-      "units": "minutes"
-    },
+    "avgMinBetween": 120,
     "numPeople": 3,
     "slidingWindowSize": 8,
     "groupCalloutChance": 0.05

@@ -55,17 +55,15 @@ class Bot:
 
             self.team_domain = settings["teamDomain"]
             self.channel_name = settings["channelName"]
-            self.min_countdown = settings["callouts"]["timeBetween"]["minTime"]
-            self.max_countdown = settings["callouts"]["timeBetween"]["maxTime"]
             self.num_people_per_callout = settings["callouts"]["numPeople"]
             self.sliding_window_size = settings["callouts"]["slidingWindowSize"]
             self.group_callout_chance = settings["callouts"]["groupCalloutChance"]
+            self.avg_min_between = settings["callouts"]["avgMinBetween"]
             self.channel_id = settings["channelId"]
             self.exercises = settings["exercises"]
             self.office_hours_on = settings["officeHours"]["on"]
             self.office_hours_begin = settings["officeHours"]["begin"]
             self.office_hours_end = settings["officeHours"]["end"]
-
             self.debug = settings["debug"]
 
         self.post_URL = "https://" + self.team_domain + ".slack.com/services/hooks/slackbot?token=" + URL_TOKEN_STRING + "&channel=" + HASH + self.channel_name
@@ -152,16 +150,13 @@ period has past.
 '''
 def selectExerciseAndStartTime(bot):
     next_time_interval = selectNextTimeInterval(bot)
+
+    # When there are no active users, we can't compute the next time interval
+    if next_time_interval is None:
+        return None
+
     minute_interval = next_time_interval/60
     exercise = selectExercise(bot)
-
-    # Announcement String of next lottery time
-    lottery_announcement = "NEXT LOTTERY FOR " + exercise["name"].upper() + " IS IN " + str(minute_interval) + (" MINUTES" if minute_interval != 1 else " MINUTE")
-
-    # Announce the exercise to the thread
-    if not bot.debug:
-        requests.post(bot.post_URL, data=lottery_announcement)
-    print lottery_announcement
 
     # Sleep the script until time is up
     if not bot.debug:
@@ -185,7 +180,9 @@ def selectExercise(bot):
 Selects the next time interval
 '''
 def selectNextTimeInterval(bot):
-    return random.randrange(bot.min_countdown * 60, bot.max_countdown * 60)
+    num_active_users = len(fetchActiveUsers(bot))
+    interval = (bot.avg_min_between / num_active_users) * 60
+    return interval
 
 
 '''
@@ -297,6 +294,10 @@ def main():
 
                 # Get an exercise to do
                 exercise = selectExerciseAndStartTime(bot)
+
+                if exercise is None:
+                    time.sleep(5*60) # Sleep 5 minutes
+                    continue
 
                 # Assign the exercise to someone
                 assignExercise(bot, exercise)
